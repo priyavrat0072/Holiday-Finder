@@ -1,11 +1,75 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Holiday Finder</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div>
+      <div>Holiday Calendar</div>
+      <div>
+        <div>
+          <select name="country" id="country">
+            <option value="AD">Andorra</option>
+            <option value="AI">Anguilla</option>
+            <option value="AG">Antigua and Barbuda</option>
+          </select>
+        </div>
+        <div>
+          <select name="year" id="year">
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+          </select>
+        </div>
+        <div>
+          <button type="button" class="bg-blue-200">Search Holiday</button>
+        </div>
+        <div>
+          <button type="button" class="bg-red-200">Clear Search</button>
+        </div>
+      </div>
+      <div>
+        <table>
+            <tr>
+                <th>Holiday Name</th>
+                <th>Date</th>
+                <th>Local Name</th>
+                <th>Country code</th>
+                <th>Holiday Type</th>
+                <th>Day of the week</th>
+            </tr>
+            <tr>
+                <td>New Year's Day</td>
+                <td>01/01/2026</td>
+                <td>Any nou</td>
+                <td>AD</td>
+                <td>Public</td>
+                <td>Thu</td>
+            </tr>
+            <tr>
+                <td>Reis</td>
+                <td>06/01/2026</td>
+                <td>Epiphany</td>
+                <td>AD</td>
+                <td>Public</td>
+                <td>Tue</td>
+            </tr>
+            <tr>
+                <td>Carnaval</td>
+                <td>16/02/2026</td>
+                <td>Carnival</td>
+                <td>AD</td>
+                <td>Public</td>
+                <td>Mon</td>
+            </tr>
+        </table>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
 </html>
