@@ -9,63 +9,96 @@
   </head>
   <body>
     <div>
-      <div>Holiday Calendar</div>
-      <div>
-        <div>
-          <select name="country" id="country">
+      <div class="text-4xl text-center font-bold m-8 underline">Holiday Calendar</div>
+      <div class="flex flex-row justify-center">
+        <div class="m-2 p-2">
+          <select class="p-2 font-medium text-xl border-2 border-red-500 rounded-lg text-blue-600" name="country" id="country">
             <option value="AD">Andorra</option>
             <option value="AI">Anguilla</option>
             <option value="AG">Antigua and Barbuda</option>
           </select>
         </div>
-        <div>
-          <select name="year" id="year">
+        <div class="m-2 p-2">
+          <select class= "p-2 font-medium text-xl border-2 border-red-500 rounded-lg text-blue-600" name="year" id="year">
             <option value="2021">2021</option>
             <option value="2022">2022</option>
             <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            <option value="2027">2027</option>
+            <option value="2028">2028</option>
+            <option value="2029">2029</option>
+            <option value="2030">2030</option>
+            <option value="2031">2031</option>
+            <option value="2032">2032</option>
+            <option value="2033">2033</option>
+            <option value="2034">2034</option>
+            <option value="2035">2035</option>
           </select>
         </div>
-        <div>
-          <button type="button" class="bg-blue-200">Search Holiday</button>
+        <div class="m-2 p-2">
+          <button type="button" id="search-btn" class="p-2 font-medium text-xl border-2 border-red-500 rounded-lg bg-green-300">Search Holiday</button>
         </div>
-        <div>
-          <button type="button" class="bg-red-200">Clear Search</button>
+        <div class="m-2 p-2">
+          <button type="button" id="clear-btn" class="p-2 font-medium text-xl border-2 border-red-500 rounded-lg bg-red-300">Clear Search</button>
         </div>
+        
       </div>
-      <div>
-        <table>
-            <tr>
-                <th>Holiday Name</th>
-                <th>Date</th>
-                <th>Local Name</th>
-                <th>Country code</th>
-                <th>Holiday Type</th>
-                <th>Day of the week</th>
+      <div class="m-2 p-2 ml-10" >
+            <div id="history-list">
+                <p class="font-bold text-lg text-gray-500 underline">Recent search</p>
+            </div>
+            <div id="history-pills" class="flex flex-row">
+                <button type="button" class="m-1 p-2 border-2 border-pink-200 rounded-2xl text-center w-1/6 ">
+                    USA - 2024
+                </button>
+                <button type="button"  class="m-1 p-2 border-2 border-pink-200 rounded-2xl text-center w-1/6 ">
+                    India - 2021
+                </button>
+                <button type="button"  class="m-1 p-2 border-2 border-pink-200 rounded-2xl text-center w-1/6 ">
+                    USA - 2025
+                </button>
+            </div>
+        </div>
+      <div class="m-10 p-2 mt-10 justify-center">
+        <table class="table-auto border-2 border-black w-full">
+            <thead>
+            <tr class="border-2 border-black">
+                <th class="border-2 border-black font-medium text-xl bg-orange-300 text-center">Holiday Name</th>
+                <th class="border-2 border-black font-medium text-xl bg-yellow-300 text-center">Date</th>
+                <th class="border-2 border-black font-medium text-xl bg-orange-300 text-center">Local Name</th>
+                <th class="border-2 border-black font-medium text-xl bg-yellow-300 text-center">Country code</th>
+                <th class="border-2 border-black font-medium text-xl bg-orange-300 text-center">Holiday Type</th>
+                <th class="border-2 border-black font-medium text-xl bg-yellow-300 text-center">Day of the week</th>
             </tr>
-            <tr>
-                <td>New Year's Day</td>
-                <td>01/01/2026</td>
-                <td>Any nou</td>
-                <td>AD</td>
-                <td>Public</td>
-                <td>Thu</td>
+            </thead>
+            <tbody id="table-body">
+            <tr class="border-2 border-black">
+                <td class="border-2 border-black text-center">New Year's Day</td>
+                <td class="border-2 border-black text-center">01/01/2026</td>
+                <td class="border-2 border-black text-center">Any nou</td>
+                <td class="border-2 border-black text-center">AD</td>
+                <td class="border-2 border-black text-center">Public</td>
+                <td class="border-2 border-black text-center">Thu</td>
             </tr>
-            <tr>
-                <td>Reis</td>
-                <td>06/01/2026</td>
-                <td>Epiphany</td>
-                <td>AD</td>
-                <td>Public</td>
-                <td>Tue</td>
+            <tr class="border-2 border-black">
+                <td class="border-2 border-black text-center">Reis</td>
+                <td class="border-2 border-black text-center">06/01/2026</td>
+                <td class="border-2 border-black text-center">Epiphany</td>
+                <td class="border-2 border-black text-center">AD</td>
+                <td class="border-2 border-black text-center">Public</td>
+                <td class="border-2 border-black text-center">Tue</td>
             </tr>
-            <tr>
-                <td>Carnaval</td>
-                <td>16/02/2026</td>
-                <td>Carnival</td>
-                <td>AD</td>
-                <td>Public</td>
-                <td>Mon</td>
+            <tr class="border-2 border-black">
+                <td class="border-2 border-black text-center">Carnaval</td>
+                <td class="border-2 border-black text-center">16/02/2026</td>
+                <td class="border-2 border-black text-center">Carnival</td>
+                <td class="border-2 border-black text-center">AD</td>
+                <td class="border-2 border-black text-center">Public</td>
+                <td class="border-2 border-black text-center">Mon</td>
             </tr>
+            </tbody>
         </table>
       </div>
     </div>
