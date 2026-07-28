@@ -1,3 +1,10 @@
+/* 
+A fully responsive website to find Holidays over 200+ countries based on country and year selected
+The Data is coming from nagerholidays API
+*/
+
+
+// Fetching the list of all the countries with their country code
 async function getCountries() {
   try {
     let response = await fetch(
@@ -13,6 +20,7 @@ async function getCountries() {
   }
 }
 
+// displaying a dropdown with the list of countries
 function displayCountries(countries) {
   const select = document.getElementById("country");
 
@@ -24,6 +32,8 @@ function displayCountries(countries) {
   });
 }
 
+
+// displaying years from 2021 to 2035 from the website
 function displayYears() {
   const yearSelect = document.getElementById("year");
   for (let year = 2021; year <= 2035; year++) {
@@ -34,6 +44,7 @@ function displayYears() {
   }
 }
 
+// Call the function to get and display countries
 async function start() {
   let countries = await getCountries();
   if (!countries) {
@@ -45,8 +56,11 @@ async function start() {
 }
 start();
 
+
+// Initialize the empty array for recent searches
 let recentSearch = [];
 
+// function for fetching the holiday data based on country code and year selected
 async function getHolidays(country, year) {
   const loading = document.getElementById("loading");
   const table = document.querySelector("table");
@@ -72,6 +86,12 @@ async function getHolidays(country, year) {
   }
 }
 
+
+/* 
+searching and rendering the data in the table format
+checking if the holidays are present or not for the selected country for selected year
+styling the table content based on the results
+*/
 async function searchAndRender(countryCode, year) {
   let holidays = await getHolidays(countryCode, year);
   if (!holidays) {
@@ -133,6 +153,12 @@ async function searchAndRender(countryCode, year) {
   }
 }
 
+/* 
+function renderHistoryPills use the collected data in the recent serach array
+and create buttons buttons in the UI in last newest search first below recent history text
+button can dynamically fetch the holiday data from same searchAndRender function
+*/
+
 async function renderHistoryPills(){
       let historypills = document.getElementById("historypills");
   historypills.innerHTML = "";
@@ -152,6 +178,11 @@ async function renderHistoryPills(){
   });
 }
 
+/* 
+Search button used to fetch the country code and year which are selected by user
+and creates a array of recent search while checking for duplicate elements are present
+and Search the holidays based on country code and year from drop down on button click
+*/
 
 
 const searchbtn = document.getElementById("searchbtn");
@@ -184,6 +215,11 @@ renderHistoryPills()
 await searchAndRender(currentCountry,currentYear)
 
 });
+
+/* 
+Clear button empties the recent searches array and calls the renderHistoryPills function to update the UI
+on button press so that recent search gets removed on single button click
+*/
 
 const clearbtn = document.getElementById("clearbtn")
 clearbtn.addEventListener("click",()=>{
