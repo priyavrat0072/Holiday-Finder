@@ -13,7 +13,6 @@ async function getCountries() {
   }
 }
 
-
 function displayCountries(countries) {
   const select = document.getElementById("country");
 
@@ -46,6 +45,8 @@ async function start() {
 }
 start();
 
+let recentSearch = [];
+
 async function getHolidays(country, year) {
   const loading = document.getElementById("loading");
   const table = document.querySelector("table");
@@ -60,51 +61,27 @@ async function getHolidays(country, year) {
     }
     let holidayList = await response.json();
     await new Promise((resolve) => setTimeout(resolve, 500));
-    
+
     return holidayList;
   } catch (error) {
     console.log("Error in fetching :", error);
-  }finally{
+  } finally {
     await new Promise((resolve) => setTimeout(resolve, 500));
     loading.classList.add("hidden");
     table.classList.remove("hidden");
   }
 }
 
-
-let recentSearch = []
-
-const searchbtn = document.getElementById("searchbtn");
-
-searchbtn.addEventListener("click", async () => {
-  let currentCountry = document.getElementById("country").value;
-  let currentYear = document.getElementById("year").value;
-  const countrySelect = document.getElementById("country")
-  const countryName = countrySelect.options[countrySelect.selectedIndex].text
-//   console.log(countryName)
-//   console.log(currentCountry , currentYear)
-  if (currentCountry == "" || currentYear == "") {
-    alert("Select both country and year");
-    return;
-  }else{
-    let found = recentSearch.find(item=>item.countryCode == currentCountry && item.year == currentYear)
-    if(!found){
-        recentSearch.unshift({
-            countryCode : currentCountry,
-            countryName : countryName,
-            year : currentYear
-        })
-    }
-  }
-  console.log(recentSearch)
-  let holidays = await getHolidays(currentCountry, currentYear);
+async function searchAndRender(countryCode, year) {
+  let holidays = await getHolidays(countryCode, year);
   if (!holidays) {
     console.log(`Could not fetch the data`);
-    return;
+    // return;
   }
-//   console.log(holidays);
+    console.log(holidays);
+    // holidays = []
 
-  if (holidays.length == 0) {
+  if ( holidays == undefined || holidays.length == 0 ) {
     const noholiday = document.getElementById("noholiday");
     noholiday.innerText =
       "No holidays found for the selected country and year.";
@@ -158,8 +135,63 @@ searchbtn.addEventListener("click", async () => {
       tableBody.appendChild(row);
     });
   }
+}
+
+async function renderHistoryPills(){
+      let historypills = document.getElementById("historypills");
+  historypills.innerHTML = "";
+
+  recentSearch.forEach((historypill) => {
+    const button = document.createElement("button");
+    button.textContent = `${historypill.countryName} - ${historypill.year}`;
+    button.classList =
+      "m-1 p-2 border-2 border-pink-200 rounded-2xl text-center";
+
+      button.addEventListener("click",async()=>{
+        document.getElementById("country").value = historypill.countryCode
+        document.getElementById("year").value = historypill.year 
+        await searchAndRender(historypill.countryCode,historypill.year)
+      })
+
+    historypills.appendChild(button);
+  });
+}
+
+
+
+const searchbtn = document.getElementById("searchbtn");
+
+searchbtn.addEventListener("click", async () => {
+  let currentCountry = document.getElementById("country").value;
+  let currentYear = document.getElementById("year").value;
+  const countrySelect = document.getElementById("country");
+  const countryName = countrySelect.options[countrySelect.selectedIndex].text;
+  //   console.log(countryName)
+  //   console.log(currentCountry , currentYear)
+
+  if (currentCountry == "" || currentYear == "") {
+    alert("Select both country and year");
+    return;
+  } else {
+    let found = recentSearch.find(
+      (item) => item.countryCode == currentCountry && item.year == currentYear,
+    );
+    if (!found) {
+      recentSearch.unshift({
+        countryCode: currentCountry,
+        countryName: countryName,
+        year: currentYear,
+      });
+    }
+  }
+//   console.log(recentSearch);
+renderHistoryPills()
+await searchAndRender(currentCountry,currentYear)
+
 });
 
-
-
-
+const clearbtn = document.getElementById("clearbtn")
+clearbtn.addEventListener("click",()=>{
+    recentSearch = []
+    renderHistoryPills()
+})
