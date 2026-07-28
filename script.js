@@ -13,6 +13,7 @@ async function getCountries() {
   }
 }
 
+
 function displayCountries(countries) {
   const select = document.getElementById("country");
 
@@ -46,6 +47,10 @@ async function start() {
 start();
 
 async function getHolidays(country, year) {
+  const loading = document.getElementById("loading");
+  const table = document.querySelector("table");
+  table.classList.add("hidden");
+  loading.classList.remove("hidden");
   try {
     let response = await fetch(
       `https://date.nager.at/api/v3/PublicHolidays/${year}/${country}`,
@@ -54,37 +59,66 @@ async function getHolidays(country, year) {
       throw new Error(`Response failed : ${response.status}`);
     }
     let holidayList = await response.json();
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    
     return holidayList;
   } catch (error) {
     console.log("Error in fetching :", error);
+  }finally{
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    loading.classList.add("hidden");
+    table.classList.remove("hidden");
   }
 }
+
+
+let recentSearch = []
 
 const searchbtn = document.getElementById("searchbtn");
 
 searchbtn.addEventListener("click", async () => {
   let currentCountry = document.getElementById("country").value;
   let currentYear = document.getElementById("year").value;
-  // console.log(currentCountry , currentYear)
+  const countrySelect = document.getElementById("country")
+  const countryName = countrySelect.options[countrySelect.selectedIndex].text
+//   console.log(countryName)
+//   console.log(currentCountry , currentYear)
   if (currentCountry == "" || currentYear == "") {
     alert("Select both country and year");
+    return;
+  }else{
+    let found = recentSearch.find(item=>item.countryCode == currentCountry && item.year == currentYear)
+    if(!found){
+        recentSearch.unshift({
+            countryCode : currentCountry,
+            countryName : countryName,
+            year : currentYear
+        })
+    }
   }
-
+  console.log(recentSearch)
   let holidays = await getHolidays(currentCountry, currentYear);
   if (!holidays) {
     console.log(`Could not fetch the data`);
     return;
   }
-  console.log(holidays);
+//   console.log(holidays);
 
-  if(holidays.length == 0){
-    const noholiday = document.getElementById("noholiday")
-    noholiday.innerText = "No holidays found for the selected country and year."
-  }else{
-      const tablehead = document.getElementById("tablehead");
-  tablehead.innerHTML = "";
-  const headRow = document.createElement("tr");
-  headRow.innerHTML = `
+  if (holidays.length == 0) {
+    const noholiday = document.getElementById("noholiday");
+    noholiday.innerText =
+      "No holidays found for the selected country and year.";
+    const table = document.querySelector("table");
+    table.classList.add("hidden");
+  } else {
+    const table = document.querySelector("table");
+    table.classList.remove("hidden");
+    const noholiday = document.getElementById("noholiday");
+    noholiday.innerText = "";
+    const tablehead = document.getElementById("tablehead");
+    tablehead.innerHTML = "";
+    const headRow = document.createElement("tr");
+    headRow.innerHTML = `
                 <th>"Holiday Name"</th>
                 <th>"Date"</th>
                 <th>"Local Name"</th>
@@ -92,23 +126,23 @@ searchbtn.addEventListener("click", async () => {
                 <th>"Holiday Type"</th>
                 <th>"Day of the week"</th>
     `;
-  tablehead.appendChild(headRow);
+    tablehead.appendChild(headRow);
 
-  headRow.querySelectorAll("th").forEach((th) => {
-    th.style.border = "1px solid black";
-    th.style.padding = "8px";
-    th.style.backgroundColor = "#ff9999";
-  });
-
-  const tableBody = document.getElementById("tablebody");
-  tableBody.innerHTML = "";
-  holidays.forEach((holiday) => {
-    const row = document.createElement("tr");
-
-    const day = new Date(holiday.date).toLocaleDateString("en-US", {
-      weekday: "short",
+    headRow.querySelectorAll("th").forEach((th) => {
+      th.style.border = "1px solid black";
+      th.style.padding = "8px";
+      th.style.backgroundColor = "#ff9999";
     });
-    row.innerHTML = `
+
+    const tableBody = document.getElementById("tablebody");
+    tableBody.innerHTML = "";
+    holidays.forEach((holiday) => {
+      const row = document.createElement("tr");
+
+      const day = new Date(holiday.date).toLocaleDateString("en-US", {
+        weekday: "short",
+      });
+      row.innerHTML = `
             <td>${holiday.name}</td>
             <td>${holiday.date}</td>
             <td>${holiday.localName}</td>
@@ -116,13 +150,16 @@ searchbtn.addEventListener("click", async () => {
             <td>${holiday.types[0]}</td>
             <td>${day}</td>
         `;
-    row.querySelectorAll("td").forEach((td) => {
-      td.style.border = "1px solid black";
-      td.style.padding = "8px";
-      td.style.textAlign = "center";
+      row.querySelectorAll("td").forEach((td) => {
+        td.style.border = "1px solid black";
+        td.style.padding = "8px";
+        td.style.textAlign = "center";
+      });
+      tableBody.appendChild(row);
     });
-    tableBody.appendChild(row);
-  });
   }
-
 });
+
+
+
+
