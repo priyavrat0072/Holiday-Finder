@@ -9,13 +9,13 @@
   </head>
   <body>
     <div>
-      <div class="text-4xl text-center font-bold m-8 underline">
+      <div class="text-2xl md:text-4xl text-center font-bold m-8 underline">
         Holiday Calendar
       </div>
-      <div class="flex flex-row justify-center">
+      <div class="flex flex-col md:flex-row justify-center items-center">
         <div class="m-2 p-2">
           <select
-            class="p-2 font-medium text-xl border-2 border-red-500 rounded-lg text-blue-600"
+            class="p-2 font-medium text-base  md:text-xl border-2 border-red-500 rounded-lg text-blue-600 w-full max-w-xs"
             name="country"
             id="country"
           >
@@ -24,7 +24,7 @@
         </div>
         <div class="m-2 p-2">
           <select
-            class="p-2 font-medium text-xl border-2 border-red-500 rounded-lg text-blue-600"
+            class="p-2 font-medium text-base md:text-xl border-2 border-red-500 rounded-lg text-blue-600 w-full max-w-xs"
             name="year"
             id="year"
           >
@@ -50,7 +50,7 @@
           </button>
         </div>
       </div>
-      <div class="m-2 p-2 ml-10">
+      <div class="m-2 p-2 md:ml-10">
         <div id="history-list">
           <p class="font-bold text-lg text-gray-500 underline">Recent History</p>
         </div>
@@ -59,7 +59,7 @@
         </div>
       </div>
       
-      <div class="m-10 p-2 mt-10 justify-center">
+      <div class="m-2 md:m-10 p-2 mt-4 md:mt-10">
         <div id="loading" class="hidden flex items-center justify-center w-full">
         <div
           class="w-20 h-20 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"
@@ -67,12 +67,14 @@
       </div>
         <div
           id="noholiday"
-          class="text-4xl text-center font-bold text-red-600 underline"
+          class="text-2xl md:text-4xl text-center font-bold text-red-600 underline"
         ></div>
+        <div class="overflow-x-auto">
         <table id="table" class="table-auto border-2 border-black w-full">
           <thead id="tablehead"></thead>
           <tbody id="tablebody"></tbody>
         </table>
+        </div>
       </div>
     </div>
 

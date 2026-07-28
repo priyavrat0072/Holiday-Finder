@@ -76,7 +76,7 @@ async function searchAndRender(countryCode, year) {
   let holidays = await getHolidays(countryCode, year);
   if (!holidays) {
     console.log(`Could not fetch the data`);
-    // return;
+    return;
   }
     console.log(holidays);
     // holidays = []
@@ -106,9 +106,7 @@ async function searchAndRender(countryCode, year) {
     tablehead.appendChild(headRow);
 
     headRow.querySelectorAll("th").forEach((th) => {
-      th.style.border = "1px solid black";
-      th.style.padding = "8px";
-      th.style.backgroundColor = "#ff9999";
+      th.className = "border border-black p-2 bg-red-300"
     });
 
     const tableBody = document.getElementById("tablebody");
@@ -128,9 +126,7 @@ async function searchAndRender(countryCode, year) {
             <td>${day}</td>
         `;
       row.querySelectorAll("td").forEach((td) => {
-        td.style.border = "1px solid black";
-        td.style.padding = "8px";
-        td.style.textAlign = "center";
+        td.classList = "border border-black p-2 text-center"
       });
       tableBody.appendChild(row);
     });
@@ -144,8 +140,7 @@ async function renderHistoryPills(){
   recentSearch.forEach((historypill) => {
     const button = document.createElement("button");
     button.textContent = `${historypill.countryName} - ${historypill.year}`;
-    button.classList =
-      "m-1 p-2 border-2 border-pink-200 rounded-2xl text-center";
+    button.classList ="m-1 p-2 border-2 border-red-200 rounded-2xl text-center";
 
       button.addEventListener("click",async()=>{
         document.getElementById("country").value = historypill.countryCode
